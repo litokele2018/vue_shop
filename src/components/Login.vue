@@ -25,61 +25,61 @@
 </template>
 
 <script>
-  import {
-    request
-  } from '../network/request'
-
-  export default {
-    data() {
-      return {
-        formData: {
-          username: "admin",
-          password: "123456"
-        },
-        rules: {
-          username: [{
-              required: true,
-              message: "请输入用户名",
-              trigger: "blur"
-            },
-            {
-              min: 3,
-              max: 15,
-              message: "长度在 3 到 15 个字符",
-              trigger: "blur"
-            }
-          ],
-          password: [{
-              required: true,
-              message: "请输入密码",
-              trigger: "blur"
-            },
-            {
-              min: 3,
-              max: 15,
-              message: "长度在 3 到 15 个字符",
-              trigger: "blur"
-            }
-          ]
-        }
-      }
-    },
-    methods: {
-      handleClick() {
-        this.$refs.form.resetFields()
+import { request } from '../network/request'
+export default {
+  data() {
+    return {
+      formData: {
+        username: 'admin',
+        password: '123456'
       },
-      handleLoginBtn() {
-        this.$refs.form.validate((isOk, obj) => {
-          // console.log(isOk, obj)
-          if (isOk) {
-            request({
-              method: 'POST',
-              url: '/login',
-              data: {
-                username: this.formData.username,
-                password: this.formData.password
-              }
-            }).then(res => {
+      rules: {
+        username: [
+          {
+            required: true,
+            message: '请输入用户名',
+            trigger: 'blur'
+          },
+          {
+            min: 3,
+            max: 15,
+            message: '长度在 3 到 15 个字符',
+            trigger: 'blur'
+          }
+        ],
+        password: [
+          {
+            required: true,
+            message: '请输入密码',
+            trigger: 'blur'
+          },
+          {
+            min: 3,
+            max: 15,
+            message: '长度在 3 到 15 个字符',
+            trigger: 'blur'
+          }
+        ]
+      }
+    }
+  },
+  methods: {
+    handleClick() {
+      this.$refs.form.resetFields()
+    },
+    handleLoginBtn() {
+      this.$refs.form.validate((isOk, obj) => {
+        // console.log(isOk, obj)
+        if (isOk) {
+          request({
+            method: 'POST',
+            url: '/login',
+            data: {
+              username: this.formData.username,
+              password: this.formData.password
+            }
+          })
+            .then(res => {
               if (res.meta.status === 400) {
                 this.$message({
                   message: `请求超时，${res.meta.msg}`,
@@ -95,74 +95,73 @@
                 }, 1000)
               }
               window.sessionStorage.setItem('token', res.data.token)
-            }).catch(err => {
+            })
+            .catch(err => {
               throw err
             })
-          }
-        })
-      }
+        }
+      })
     }
-  };
-
+  }
+}
 </script>
 
 <style lang="less" scoped>
-  .login {
-    height: 100%;
-    background-color: #2b4b6b;
+.login {
+  height: 100%;
+  background-color: #2b4b6b;
 
-    .login_container {
+  .login_container {
+    position: absolute;
+    height: 500px;
+    width: 700px;
+    background-color: #fff;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    border-radius: 10px;
+
+    .avatar_box {
       position: absolute;
-      height: 500px;
-      width: 700px;
-      background-color: #fff;
+      width: 200px;
+      height: 200px;
+      background-color: #2b4b6b;
+      border: 1px solid #eee;
+      border-radius: 50%;
+      transform: translateY(-50%);
       left: 0;
       right: 0;
-      top: 0;
-      bottom: 0;
       margin: auto;
-      border-radius: 10px;
 
-      .avatar_box {
-        position: absolute;
-        width: 200px;
-        height: 200px;
-        background-color: #2b4b6b;
+      .avatar_logo {
+        width: 180px;
+        height: 180px;
+        background-color: #fff;
         border: 1px solid #eee;
         border-radius: 50%;
-        transform: translateY(-50%);
-        left: 0;
-        right: 0;
-        margin: auto;
-
-        .avatar_logo {
-          width: 180px;
-          height: 180px;
-          background-color: #fff;
-          border: 1px solid #eee;
-          border-radius: 50%;
-          position: absolute;
-          top: 0;
-          bottom: 0;
-          right: 0;
-          left: 0;
-          margin: auto;
-        }
-      }
-
-      .login_form_area {
         position: absolute;
-        width: 100%;
+        top: 0;
         bottom: 0;
-        padding: 0 20px;
-        box-sizing: border-box;
+        right: 0;
+        left: 0;
+        margin: auto;
+      }
+    }
 
-        .login_button {
-          display: flex;
-          justify-content: flex-end;
-        }
+    .login_form_area {
+      position: absolute;
+      width: 100%;
+      bottom: 0;
+      padding: 0 20px;
+      box-sizing: border-box;
+
+      .login_button {
+        display: flex;
+        justify-content: flex-end;
       }
     }
   }
-
+}
 </style>>
