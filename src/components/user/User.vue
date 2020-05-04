@@ -66,6 +66,7 @@
         layout="total, sizes, prev, pager, next, jumper"
       ></el-pagination>
     </el-card>
+    <!-- 添加用户的对话框 -->
     <el-dialog
       :before-close="handleClose"
       :visible.sync="dialogVisible"
@@ -96,6 +97,7 @@
         <el-button @click="addUser" type="primary">确 定</el-button>
       </span>
     </el-dialog>
+    <!-- 编辑用户的对话框 -->
     <el-dialog :visible.sync="editUserDialog" title="提示" width="30%">
       <el-form :model="editInfo" :rules="rules" label-width="100px" ref="editRuleForm" status-icon>
         <el-form-item label="用户名" prop="editUsername">
@@ -220,10 +222,13 @@ export default {
     handleEdit($index, row, column, store) {
       this.editInfo.editUsername = row.username
       this.editInfo.id = row.id
+      this.editInfo.email = row.email
+      this.editInfo.mobile = row.mobile
       this.editUserDialog = true
     },
     // 当前 页 变化
     handleCurrentChange(val) {
+      this.currentPage = val
       this.getUsersList(val, this.pageSize, this.query)
     },
     // 页面显示数量变化

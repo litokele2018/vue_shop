@@ -37,13 +37,29 @@ export function deleteUser(id) {
 }
 
 export function editUser(editInfo) {
-  console.log(editInfo)
   return request({
     method: 'put',
     url: `users/${editInfo.id}`,
     data: {
       email: editInfo.email,
       mobile: editInfo.mobile
+    }
+  })
+}
+
+export function getUserById(id) {
+  return  request({
+    method: 'GET',
+    url: `users/${id}`
+  })
+}
+
+export function assignUserRole(userId, roleId) {
+  return request({
+    method: 'PUT',
+    url: `users/${userId}/role`,
+    data: {
+      rid: roleId
     }
   })
 }
