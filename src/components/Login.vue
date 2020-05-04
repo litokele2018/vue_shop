@@ -3,21 +3,42 @@
     <div class="login_container">
       <!-- 头像 -->
       <div class="avatar_box">
-        <img class="avatar_logo" src="~assets/logo.png" alt />
+        <img
+          class="avatar_logo"
+          src="~assets/logo.png"
+        />
       </div>
-      <el-form ref="form" class="login_form_area" :model="formData" :rules="rules">
+      <el-form
+        :model="formData"
+        :rules="rules"
+        class="login_form_area"
+        ref="form"
+      >
         <!-- 用户名 -->
         <el-form-item prop="username">
-          <el-input prefix-icon="iconfont icon-user" v-model="formData.username"></el-input>
+          <el-input
+            prefix-icon="iconfont icon-user"
+            v-model="formData.username"
+          ></el-input>
         </el-form-item>
         <!-- 密码 -->
         <el-form-item prop="password">
-          <el-input prefix-icon="iconfont icon-3702mima" show-password v-model="formData.password"></el-input>
+          <el-input
+            prefix-icon="iconfont icon-3702mima"
+            show-password
+            v-model="formData.password"
+          ></el-input>
         </el-form-item>
         <!-- 按钮 -->
         <el-form-item class="login_button">
-          <el-button type="primary" @click="handleLoginBtn">登录</el-button>
-          <el-button type="primary" @click="handleClick">重置</el-button>
+          <el-button
+            @click="handleLoginBtn"
+            type="primary"
+          >登录</el-button>
+          <el-button
+            @click="handleClick"
+            type="primary"
+          >重置</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -25,7 +46,7 @@
 </template>
 
 <script>
-import { request } from '../network/request'
+import { requestLogin } from '../network/request'
 export default {
   data() {
     return {
@@ -71,14 +92,7 @@ export default {
       this.$refs.form.validate((isOk, obj) => {
         // console.log(isOk, obj)
         if (isOk) {
-          request({
-            method: 'POST',
-            url: '/login',
-            data: {
-              username: this.formData.username,
-              password: this.formData.password
-            }
-          })
+          requestLogin(this.formData.username, this.formData.password)
             .then(res => {
               if (res.meta.status === 400) {
                 this.$message({
