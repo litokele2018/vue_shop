@@ -3,42 +3,21 @@
     <div class="login_container">
       <!-- 头像 -->
       <div class="avatar_box">
-        <img
-          class="avatar_logo"
-          src="~assets/logo.png"
-        />
+        <img class="avatar_logo" src="~assets/logo.png" />
       </div>
-      <el-form
-        :model="formData"
-        :rules="rules"
-        class="login_form_area"
-        ref="form"
-      >
+      <el-form :model="formData" :rules="rules" class="login_form_area" ref="form">
         <!-- 用户名 -->
         <el-form-item prop="username">
-          <el-input
-            prefix-icon="iconfont icon-user"
-            v-model="formData.username"
-          ></el-input>
+          <el-input prefix-icon="iconfont icon-user" v-model="formData.username"></el-input>
         </el-form-item>
         <!-- 密码 -->
         <el-form-item prop="password">
-          <el-input
-            prefix-icon="iconfont icon-3702mima"
-            show-password
-            v-model="formData.password"
-          ></el-input>
+          <el-input prefix-icon="iconfont icon-3702mima" show-password v-model="formData.password"></el-input>
         </el-form-item>
         <!-- 按钮 -->
         <el-form-item class="login_button">
-          <el-button
-            @click="handleLoginBtn"
-            type="primary"
-          >登录</el-button>
-          <el-button
-            @click="handleClick"
-            type="primary"
-          >重置</el-button>
+          <el-button @click="handleLoginBtn" type="primary">登录</el-button>
+          <el-button @click="handleClick" type="primary">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -46,47 +25,47 @@
 </template>
 
 <script>
-import { requestLogin } from '../network/request'
+import { requestLogin } from "../network/request";
 export default {
   data() {
     return {
       formData: {
-        username: 'admin',
-        password: '123456'
+        username: "admin",
+        password: "123456"
       },
       rules: {
         username: [
           {
             required: true,
-            message: '请输入用户名',
-            trigger: 'blur'
+            message: "请输入用户名",
+            trigger: "blur"
           },
           {
             min: 3,
             max: 15,
-            message: '长度在 3 到 15 个字符',
-            trigger: 'blur'
+            message: "长度在 3 到 15 个字符",
+            trigger: "blur"
           }
         ],
         password: [
           {
             required: true,
-            message: '请输入密码',
-            trigger: 'blur'
+            message: "请输入密码",
+            trigger: "blur"
           },
           {
             min: 3,
             max: 15,
-            message: '长度在 3 到 15 个字符',
-            trigger: 'blur'
+            message: "长度在 3 到 15 个字符",
+            trigger: "blur"
           }
         ]
       }
-    }
+    };
   },
   methods: {
     handleClick() {
-      this.$refs.form.resetFields()
+      this.$refs.form.resetFields();
     },
     handleLoginBtn() {
       this.$refs.form.validate((isOk, obj) => {
@@ -97,27 +76,27 @@ export default {
               if (res.meta.status === 400) {
                 this.$message({
                   message: `请求超时，${res.meta.msg}`,
-                  type: 'error'
-                })
+                  type: "error"
+                });
               } else {
                 this.$message({
-                  message: '登录成功',
-                  type: 'success'
-                })
+                  message: "登录成功",
+                  type: "success"
+                });
                 setTimeout(() => {
-                  this.$router.push('/home')
-                }, 1000)
+                  this.$router.push("/home");
+                }, 1000);
               }
-              window.sessionStorage.setItem('token', res.data.token)
+              window.sessionStorage.setItem("token", res.data.token);
             })
             .catch(err => {
-              throw err
-            })
+              throw err;
+            });
         }
-      })
+      });
     }
   }
-}
+};
 </script>
 
 <style lang="less" scoped>

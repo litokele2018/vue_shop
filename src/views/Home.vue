@@ -2,20 +2,14 @@
   <el-container>
     <el-header>
       <div>
-        <img
-          alt
-          src="~assets/heima.png"
-        />
+        <img alt src="~assets/heima.png" />
         <span>电商后台管理系统</span>
       </div>
       <el-button @click="exitFunc">退出</el-button>
     </el-header>
     <el-container>
       <el-aside :width="menuWidth">
-        <div
-          @click="handleToggle"
-          class="toggle"
-        >
+        <div @click="handleToggle" class="toggle">
           <span>|||</span>
         </div>
         <el-menu
@@ -29,11 +23,7 @@
           unique-opened
         >
           <!-- 一级标题 -->
-          <el-submenu
-            :index="index.toString()"
-            :key="item.id"
-            v-for="(item, index) in menuList"
-          >
+          <el-submenu :index="index.toString()" :key="item.id" v-for="(item, index) in menuList">
             <template slot="title">
               <i :class="icons[index]"></i>
               <span ref="show">{{item.authName}}</span>
@@ -61,80 +51,80 @@
 </template>
 
 <script>
-import { requestMenu } from '../../network/request.js'
+import { requestMenu } from "../network/request";
 export default {
   data() {
     return {
       menuList: [],
       icons: [
-        'iconfont icon-users',
-        'iconfont icon-tijikongjian',
-        'iconfont icon-shangpin',
-        'iconfont icon-danju',
-        'iconfont icon-baobiao'
+        "iconfont icon-users",
+        "iconfont icon-tijikongjian",
+        "iconfont icon-shangpin",
+        "iconfont icon-danju",
+        "iconfont icon-baobiao"
       ],
       isToggle: false,
-      menuWidth: '200px',
+      menuWidth: "200px",
       timer: null,
-      saveStatus: ''
-    }
+      saveStatus: ""
+    };
   },
   created() {
-    this.saveStatus = this.$route.path
+    this.saveStatus = this.$route.path;
     requestMenu().then(res => {
       if (res.meta.status === 200) {
-        this.menuList = res.data
+        this.menuList = res.data;
       } else {
-        this.$message.error(res.meta.msg)
+        this.$message.error(res.meta.msg);
       }
-    })
+    });
   },
   methods: {
     exitFunc() {
       this.$message({
-        message: '退出成功',
-        type: 'success'
-      })
+        message: "退出成功",
+        type: "success"
+      });
       setTimeout(() => {
-        this.$router.push('/login')
-      }, 1000)
+        this.$router.push("/login");
+      }, 1000);
     },
     handleToggle() {
-      this.isToggle = !this.isToggle
-      clearInterval(this.timer)
+      this.isToggle = !this.isToggle;
+      clearInterval(this.timer);
       if (this.isToggle) {
         this.$refs.show.forEach(item => {
-          item.style.visibility = 'hidden'
-        })
+          item.style.visibility = "hidden";
+        });
         this.timer = setInterval(() => {
-          this.menuWidth = parseInt(this.menuWidth) - 30 + 'px'
+          this.menuWidth = parseInt(this.menuWidth) - 30 + "px";
           if (parseInt(this.menuWidth) <= 50) {
-            this.menuWidth = '50px'
-            clearInterval(this.timer)
+            this.menuWidth = "50px";
+            clearInterval(this.timer);
           }
-        }, 50)
+        }, 50);
       } else {
         this.timer = setInterval(() => {
-          this.menuWidth = parseInt(this.menuWidth) + 30 + 'px'
+          this.menuWidth = parseInt(this.menuWidth) + 30 + "px";
           if (parseInt(this.menuWidth) > 200) {
-            this.menuWidth = '200px'
-            clearInterval(this.timer)
+            this.menuWidth = "200px";
+            clearInterval(this.timer);
           }
-        }, 50)
+        }, 50);
       }
     }
   },
   watch: {
     $route(to, from) {
-      this.saveStatus = this.$route.path
-      if (this.$route.path === '/welcome') {
+      this.saveStatus = this.$route.path;
+      if (this.$route.path === "/welcome") {
         this.$refs.menu.openedMenus.forEach(item => {
-          this.$refs.menu.close(item)
-        })
+          this.$refs.menu.close(item);
+        });
       }
     }
   }
-}
+};
 </script>
 
 <style lang="less" scoped>

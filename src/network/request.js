@@ -3,7 +3,7 @@ import axios from 'axios'
 export function request(config) {
   return new Promise((resolve, reject) => {
     let instance = axios.create({
-      baseURL: 'http://127.0.0.1:8888/api/private/v1'
+      baseURL: 'http://172.81.242.229:8888/api/private/v1'
     })
     instance.interceptors.request.use((config) => {
       config.headers.Authorization = window.sessionStorage.getItem('token')
