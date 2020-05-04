@@ -10,7 +10,7 @@ export function request(config) {
       return config
     })
     instance(config).then(res => {
-      let {data} = res
+      let { data } = res
       resolve(data)
     }).catch(err => {
       reject(err)
