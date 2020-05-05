@@ -51,7 +51,12 @@
               type="danger"
             ></el-button>
             <el-tooltip :enterable="false" content="分配角色" effect="dark" placement="top">
-              <el-button icon="el-icon-setting" size="mini" type="warning"></el-button>
+              <el-button
+                @click="allotRole(scope.row)"
+                icon="el-icon-setting"
+                size="mini"
+                type="warning"
+              ></el-button>
             </el-tooltip>
           </template>
         </el-table-column>
@@ -115,6 +120,18 @@
         <el-button @click="editUserInfo" type="primary">确 定</el-button>
       </span>
     </el-dialog>
+    <!-- 分配角色的对话框 -->
+    <el-dialog :visible.sync="allotUserRoleDialog" title="分配角色" width="30%">
+      <div>当前的用户：{{roleInfo.username}}</div>
+      <div>当前的角色：{{roleInfo.role_name}}</div>
+      <el-select placeholder="请选择" v-model="value">
+        <el-option :key="item.id" :label="item.roleName" :value="item.id" v-for="item in roleList"></el-option>
+      </el-select>
+      <span class="dialog-footer" slot="footer">
+        <el-button @click="allotUserRoleDialog = false">取 消</el-button>
+        <el-button @click="allotRoleInfo" type="primary">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -124,8 +141,10 @@ import {
   putStateChange,
   postNewUser,
   deleteUser,
-  editUser
+  editUser,
+  assignUserRole
 } from "network/user.js"
+import { getRoleList } from "../../network/rights"
 export default {
   data() {
     const checkUsername = (rule, value, callback) => {
@@ -183,6 +202,8 @@ export default {
       totalNum: 4,
       dialogVisible: false,
       editUserDialog: false,
+      allotUserRoleDialog: false,
+      value: "",
       ruleForm: {
         username: "",
         pass: "",
@@ -202,11 +223,18 @@ export default {
         editUsername: "",
         email: "",
         mobile: ""
-      }
+      },
+      roleInfo: {},
+      roleList: []
     }
   },
-  created() {
+  async created() {
     this.getUsersList(1, this.pageSize, this.query)
+    // 获取角色种类
+    let res = await getRoleList()
+    if (res.meta.status === 200) {
+      this.roleList = res.data
+    }
   },
   methods: {
     // 请求用户信息
@@ -314,14 +342,37 @@ export default {
           const res = await editUser(this.editInfo)
           console.log(res)
           if (res.meta.status === 200) {
-            this.$message.success('更新成功!')
+            this.$message.success("更新成功!")
             this.editUserDialog = false
             this.getUsersList(this.currentPage, this.pageSize, this.query)
           } else {
-            this.$message.success('更新失败!')
+            this.$message.success("更新失败!")
           }
         }
       })
+    },
+    // 点击分配角色
+    allotRole(row) {
+      this.value = ''
+      this.roleInfo.username = row.username
+      this.roleInfo.role_name = row.role_name
+      this.roleInfo.id = row.id
+      this.allotUserRoleDialog = true
+    },
+    // 分配角色请求
+    async allotRoleInfo() {
+      let ok = window.confirm("确定添加")
+      this.allotUserRoleDialog = false
+      if (ok) {
+        const res = await assignUserRole(this.roleInfo.id, this.value)
+        console.log(res)
+        if (res.meta.status === 200) {
+          this.$message.success("设置角色成功")
+          this.getUsersList(this.currentPage, this.pageSize, this.query)
+        } else {
+          this.$message.error("设置角色失败")
+        }
+      }
     }
   }
 }
