@@ -14,7 +14,6 @@
         :selection-type="false"
         :show-index="true"
         :show-row-hover="false"
-        @tree-icon-click="expandFunc"
         border
         index-text="#"
       >
@@ -214,11 +213,6 @@ export default {
       this.form.cat_level = this.value.length
       this.form.cat_pid = this.value[this.value.length - 1]
       console.log(this.form.cat_level, this.form.cat_pid)
-    },
-    expandFunc(row, index, event) {
-      console.log("row:", row)
-      console.log("index:", index)
-      console.log("event", event)
     }
   }
 }
@@ -233,8 +227,7 @@ export default {
 }
 .zk-table {
   max-height: 700px;
-  overflow: scroll;
-  overflow-x: hidden;
+  overflow-y: scroll!important;
   -webkit-overflow-scrolling: touch;
 }
 .el-scrollbar {
