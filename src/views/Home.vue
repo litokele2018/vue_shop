@@ -166,4 +166,7 @@ export default {
     }
   }
 }
+.el-main {
+  overflow: hidden;
+}
 </style>
