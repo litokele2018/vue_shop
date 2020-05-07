@@ -12,24 +12,24 @@ const Params = () => import('components/goods/Params.vue')
 const Categories = () => import('components/goods/Categories.vue')
 const Orders = () => import('components/orders/Orders.vue')
 const Reports = () => import('components/reports/Reports.vue')
+const AddGoods = () => import('components/goods/AddGoods.vue')
+
 
 Vue.use(VueRouter)
 
-const routes = [
-  {
+const routes = [{
     path: '/',
     redirect: '/login'
   },
   {
     path: '/login',
     component: Login
-  }, 
+  },
   {
     path: '/home',
     component: Home,
     redirect: '/welcome',
-    children: [
-      {
+    children: [{
         path: '/welcome',
         component: Welcome
       },
@@ -64,6 +64,10 @@ const routes = [
       {
         path: '/reports',
         component: Reports
+      },
+      {
+        path: '/addGoods',
+        component: AddGoods
       }
     ]
   }
