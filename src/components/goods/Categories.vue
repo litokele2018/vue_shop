@@ -5,7 +5,7 @@
       <el-breadcrumb-item>商品管理</el-breadcrumb-item>
       <el-breadcrumb-item>商品分类</el-breadcrumb-item>
     </el-breadcrumb>
-    <el-card class="user-card">
+    <el-card>
       <el-button @click="addCategory" class="addCat" type="primary">添加分类</el-button>
       <tree-table
         :columns="columns"
