@@ -83,7 +83,7 @@
     </el-dialog>
     <!-- 物流进度 -->
     <el-dialog :visible.sync="deliveryDialogVisible" title="物流进度" width="50%">
-      <div :key="index" v-for="(item, index) in delivery" style="margin-bottom: 15px">
+      <div :key="index" style="margin-bottom: 15px" v-for="(item, index) in delivery">
         <span>{{item.time}}</span>
         <span>{{item.context}}</span>
       </div>

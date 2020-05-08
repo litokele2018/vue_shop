@@ -7,7 +7,6 @@ import 'assets/css/reset.css'
 import './assets/css/fonts/iconfont.css'
 
 import TreeTable from 'vue-table-with-tree-grid'
-
 import VueQuillEditor from 'vue-quill-editor'
 
 import 'quill/dist/quill.core.css' // import styles
