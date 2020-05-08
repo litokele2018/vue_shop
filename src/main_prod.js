@@ -1,17 +1,11 @@
 import Vue from 'vue'
 import App from './App.vue'
-import router from './router'
-import store from './store'
-import './plugins/element.js'
+import router from './router/index.js'
+import store from './store/index.js'
 import 'assets/css/reset.css'
-import './assets/css/fonts/iconfont.css'
 
 import TreeTable from 'vue-table-with-tree-grid'
 import VueQuillEditor from 'vue-quill-editor'
-
-import 'quill/dist/quill.core.css' // import styles
-import 'quill/dist/quill.snow.css' // for snow theme
-import 'quill/dist/quill.bubble.css' // for bubble theme
 
 Vue.use(VueQuillEditor, /* { default global options } */ )
 

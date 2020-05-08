@@ -229,6 +229,7 @@ export default {
     }
   },
   async created() {
+    console.log(1)
     this.getUsersList(1, this.pageSize, this.query)
     // 获取角色种类
     let res = await getRoleList()

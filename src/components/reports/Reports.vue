@@ -12,8 +12,8 @@
 </template>
 
 <script>
-import Echarts from "echarts"
-import loadsh from "lodash"
+import echarts from "echarts"
+import merge from "lodash/merge"
 
 import { getReportsData } from "../../network/reports"
 export default {
@@ -55,8 +55,9 @@ export default {
     getReportsData().then(res => {
       if (res.meta.status === 200) {
         this.option = res.data
-        let myChart = Echarts.init(this.$refs.echarts)
-        let result = loadsh.merge(res.data, this.options)
+        let myChart = echarts.init(this.$refs.echarts)
+        let result = merge(res.data, this.options)
+        this.options = result
         myChart.setOption(result)
       }
     })
